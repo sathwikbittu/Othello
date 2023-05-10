@@ -1,0 +1,167 @@
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
+</head>
+<div class="form-wrapper">
+<form #userForm="ngForm" [ngClass]="{'blurred': isBlurred}" >
+  <div class="form-group">
+    <label for="userName">Username:</label>
+    <input type="text" class="form-control"  (input)="showSubmitButton()" id="userName" name="userName" [(ngModel)]="user.userName" 
+    required minlength="5" maxlength="20" pattern="[a-zA-Z0-9]*">
+    <div *ngIf="userForm.controls['userName'].invalid && (userForm.controls['userName'].dirty || userForm.controls['userName'].touched)">
+      <div style="font-size: 14px; text-align: center;font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['userName'].errors?.['required']">
+        Username is required.
+      </div>
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['userName'].errors?.['minlength']">
+        Username must be at least 5 characters long.
+      </div>
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['userName'].errors?.['maxlength']">
+        Username cannot be longer than 20 characters.
+      </div>
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['userName'].errors?.['pattern']">
+        Username can only contain letters and numbers.
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="userPassword">Password:</label>
+    <input type="password" class="form-control" (input)="showSubmitButton()" id="userPassword" name="userPassword" [(ngModel)]="user.userPassword" 
+    required minlength="8" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@#!%*?&])[A-Za-z\d$@#!%*?&]{8,}$">
+    <div *ngIf="userForm.controls['userPassword'].invalid && (userForm.controls['userPassword'].dirty || userForm.controls['userPassword'].touched)">
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['userPassword'].errors?.['required']">
+        Password is required.
+      </div>
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['userPassword'].errors?.['minlength']">
+        Password must be at least 8 characters long.
+      </div>
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['userPassword'].errors?.['pattern']">
+        Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+  <label for="confirmPassword">Confirm Password:</label>
+  <input type="password" class="form-control" id="confirmPassword" (input)="showSubmitButton()" name = "confirmPassword"[(ngModel)] = "confirmPassword" >
+  <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['confirmPassword'].dirty && user.userPassword !== confirmPassword">
+    Passwords do not match.
+  </div> 
+  </div>
+  
+  <div class="form-group">
+    <label for="emailAddress">Email Address:</label>
+    <input type="email" class="form-control" id="emailAddress" (input)="showSubmitButton()" name="emailAddress" [(ngModel)]="user.emailAddress" 
+    required email>
+    <div *ngIf="userForm.controls['emailAddress'].invalid && (userForm.controls['emailAddress'].dirty || userForm.controls['emailAddress'].touched)">
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['emailAddress'].errors?.['required']">
+        Email Address is required.
+      </div>
+      <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['emailAddress'].errors?.['email']">
+        Email Address is invalid.
+      </div>
+    </div>
+  </div>
+  
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" class="form-control" id="firstName"  (input)="showSubmitButton()" name="firstName" [(ngModel)]="user.firstName" 
+      required minlength="2" maxlength="50" pattern="[a-zA-Z]*">
+      <div *ngIf="userForm.controls['firstName'].invalid && (userForm.controls['firstName'].dirty || userForm.controls['firstName'].touched)">
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['firstName'].errors?.['required']">
+          First Name is required.
+        </div>
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['firstName'].errors?.['minlength']">
+          First Name must be at least 2 characters long.
+        </div>
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['firstName'].errors?.['maxlength']">
+          First Name cannot be longer than 50 characters.
+        </div>
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['firstName'].errors?.['pattern']">
+          First Name can only contain letters.
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" class="form-control" id="lastName" (input)="showSubmitButton()" name="lastName" [(ngModel)]="user.lastName" 
+      required minlength="2" maxlength="50" pattern="[a-zA-Z]*">
+      <div *ngIf="userForm.controls['lastName'].invalid && (userForm.controls['lastName'].dirty || userForm.controls['lastName'].touched)">
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['lastName'].errors?.['required']">
+          Last Name is required.
+        </div>
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['lastName'].errors?.['minlength']">
+          Last Name must be at least 2 characters long.
+        </div>
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['lastName'].errors?.['maxlength']">
+          Last Name cannot be longer than 50 characters.
+        </div>
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['lastName'].errors?.['pattern']">
+          Last Name can only contain letters.
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number:</label>
+      <input type="tel" class="form-control" id="phoneNumber" (input)="showSubmitButton()" name="phoneNumber" [(ngModel)]="user.phoneNumber" 
+      required pattern="[0-9]{10}">
+      <div *ngIf="userForm.controls['phoneNumber'].invalid && (userForm.controls['phoneNumber'].dirty || userForm.controls['phoneNumber'].touched)">
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['phoneNumber'].errors?.['required']">
+          Phone Number is required.
+        </div>
+        <div style="font-size: 14px; text-align: center; padding: 7px; font-weight: bold;color: #ff0000;"*ngIf="userForm.controls['phoneNumber'].errors?.['pattern']">
+          Phone Number must be a 10-digit number.
+        </div>
+      </div>
+
+    </div>
+
+<!--<div *ngIf="showOTPInput">
+  <div class="form-group">
+    <label for="otpCode">Enter OTP Code:</label>
+    <input type="number" class="form-control" id="otpCode" name="otpCode" [(ngModel)]="otpCodeEntered" required pattern="[0-9]{6}">
+  </div>
+  <div *ngIf="userForm.controls['otpCode'].invalid && (userForm.controls['otpCode'].dirty || userForm.controls['otpCode'].touched)">
+    <div *ngIf="userForm.controls['otpCode'].errors?.['required']">
+      OTP Code is required.
+    </div>
+    <div *ngIf="userForm.controls['otpCode'].errors?.['pattern']">
+      OTP Code must be a 6-digit number.
+    </div>
+  </div>
+  <button class="btn btn-primary" [disabled]="!userForm.controls['otpCode'].valid" (click)="submitOTP()">Submit OTP</button>
+</div>-->
+
+
+    
+<button type="submit" class="btn btn-primary"  *ngIf="showButton" (click)="generateOTP()" [disabled]="!userForm.valid" >Register</button>
+
+   
+    
+</form>
+</div>
+<div *ngIf="displayOTPModal">
+  <div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="otpModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="otpModalLabel">Enter OTP</h5>
+            <span aria-hidden="true">&times;</span>
+        </div>
+        <div class="modal-body">
+          <label>An OTP has been sent to {{user.emailAddress}}</label>
+          <input type="text" [(ngModel)]="otpCodeEntered" class="form-control" placeholder="Enter OTP">
+          <p>OTP will expire in {{timer}} seconds</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click) = "close()" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="submitOTP()">Verify</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+

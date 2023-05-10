@@ -1,0 +1,149 @@
+body {
+  background-color: #bd9c56;
+}
+
+.board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+  height: 400px;
+  background-color: #8BC34A;
+  border: 2px solid black;
+  box-shadow: 0 0 10px #888;
+  margin: 0 auto;
+}
+
+.player-symbol-1,
+.player-symbol-2 {
+  position: absolute;
+  top: 10px;
+  width: 80px;
+  height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.player-symbol-1 {
+  left: 10px;
+  background-image: url('/assets/images/blackPlayer.png');
+}
+
+.player-symbol-2 {
+  right: 10px;
+  background-image: url('/assets/images/whitePlayer.png');
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin: 5px;
+  background-color: #09781a;
+  box-shadow: 0 0 5px #555;
+  cursor: pointer;
+}
+
+.cell.black {
+  background-color: #333;
+}
+
+.cell.white {
+  background-color: #EEE;
+}
+
+.piece {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.piece-inner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #000;
+}
+
+.error-message {
+  position: absolute;
+  bottom: -50px; /* Position the error message below the board */
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f44336;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  text-transform: uppercase;
+  animation: slide-up 0.5s ease-in-out both;
+}
+
+.error-message:before {
+  content: "\26A0";
+  font-size: 24px;
+  margin-right: 10px;
+}
+@keyframes slide-up {
+  0% { bottom: -50px; }
+  100% { bottom: 0; }
+}
+
+.winner {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  font-size: 3em;
+  font-weight: bold;
+  text-align: center;
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: #F44336;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  animation-name: slide-down, pulse;
+  animation-duration: 0.5s, 1s;
+  animation-delay: 0s, 0.5s;
+  animation-timing-function: ease-out, ease-in-out;
+  animation-fill-mode: forwards, both;
+}
+
+@keyframes slide-down {
+  0% { top: -100px; }
+  100% { top: 50px; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}

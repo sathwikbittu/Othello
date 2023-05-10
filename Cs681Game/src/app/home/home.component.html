@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Game</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div ng-controller="MainController">
+    <!-- Main header -->
+    <header>
+      
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+      <ul>
+        <li><a routerLink="/rules">Rules</a></li>
+        <li><a routerLink="/high-score">High Scores</a></li>
+        <li><a routerLink="/about">About</a></li>
+        <li><a href="#" (click)="logout()">Logout</a></li>
+      </ul>
+    </nav>
+    
+
+    <!-- Main content -->
+    <!-- <main>
+      <h2>How to Play</h2>
+      <p>Instructions go here.</p>
+      <p>More instructions go here.</p> -->
+      <!-- <div *ngIf="players.length < 2">
+        <h3>Lobby</h3>
+        <p>Waiting for other player to join...</p>
+        <button (click)="ready()" [disabled]="isReady">Ready</button>
+      </div> -->
+      <!-- Main content -->
+<main>
+  <h2>Create a Room</h2>
+  <form (submit)="createRoom()">
+    <h3>
+    <label for="roomName">Room Name:    </label>
+    <input type="text" id="roomName" name="roomName" [(ngModel)]="room.roomName">
+  </h3>
+    <button class = "button-main" type="submit">Create a Room</button>
+  </form>
+  <div *ngIf="getRooms.length > 0">
+    <h2>Rooms</h2>
+    <table>
+      <thead>
+        <tr>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of getRooms">
+          <td>{{room.roomName}}</td>
+          <div *ngIf="room.userName != currentUser">
+          <td><button (click)="joinRoom(room)">Join Room</button></td>
+        </div>
+        <div *ngIf="room.joinedPlayerName.length>0 && room.userName==currentUser">
+          <td><button (click)="startGame()">Start game</button></td>
+        </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+      <!-- <div *ngIf="players.length === 2">
+        <div *ngIf="!isReady">
+          <p>Waiting for other player to get ready...</p
+        </div>
+        <div *ngIf="isReady">
+          <p>
+            Player 1: <span [ngClass]="{ 'tick-mark': players[0].isReady }"></span>
+            Player 2: <span [ngClass]="{ 'tick-mark': players[1].isReady }"></span>
+          </p>
+          <button (click)="startGame()" id="start-game-button">Start Game</button>
+        </div>
+      </div>
+      
+    </main> -->
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2023 SWE 681 Game. All rights reserved.</p>
+    </footer>
+  </div>
+
+  <!-- Load custom JavaScript -->
+  <script src="app.js"></script>
+</body>
+
+</html>

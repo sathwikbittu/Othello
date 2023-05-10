@@ -1,0 +1,44 @@
+
+<body>
+<!-- <img src="/assets/images/blackPlayer.png" alt="Player1">
+<img src="/assets/images/whitePlayer.png" alt="Player2"> -->
+
+<div class="player-symbol-1" [class.active]="currentPlayer === 'B'"><div *ngIf="player=='B'">
+  {{currentUser}}
+  </div></div>
+<div class="player-symbol-2" [class.active]="currentPlayer === 'W'"><div *ngIf="player=='W'">
+  {{currentUser}}
+  </div></div>
+
+<!-- {{currentPlayer}} -->
+<div class="board" *ngIf="board">
+  <div class="row" *ngFor="let row of board; let i = index">
+    <div class="cell" *ngFor="let cell of row; let j = index"
+         [class.black]="cell === 'B'"
+         [class.white]="cell === 'W'"
+         (click)="currentPlayer === player ? makeMove(i, j) : showError()">
+         <!-- Add click event with condition to check if it's user's turn -->
+
+      <div class="piece" *ngIf="cell">
+        <div class="piece-inner" [class.black-piece]="cell === 'B'" [class.white-piece]="cell === 'W'"></div>
+      </div>
+    </div>
+  </div>
+  <div class="error-message" *ngIf="wrongUser">
+    <div class="message-box wrong-move" > <!-- Add fade-out class to error message box -->
+      <span class="message-text">{{ wrongUser }}</span>
+    </div>
+  </div>
+</div>
+<div class="error-message" *ngIf="wrongMove">
+  <div class="message-box wrong-move">
+    <span class="message-text">{{ wrongMove }}</span>
+  </div>
+</div>
+<div class="winner" *ngIf="winner">
+  <div class="message-box winner-message">
+    <span class="message-text">{{ winner }}</span>
+  </div>
+</div>
+
+</body>

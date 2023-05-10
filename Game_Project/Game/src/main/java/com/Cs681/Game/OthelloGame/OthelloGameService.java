@@ -9,6 +9,8 @@ public class OthelloGameService {
 
     private char[][] board;
     private char currentPlayer;
+    int blackCount = 0;
+    int whiteCount = 0;
 
     public OthelloGameService() {
         board = new char[BOARD_SIZE][BOARD_SIZE];
@@ -142,8 +144,8 @@ public class OthelloGameService {
 
 
     public char getWinner() {
-        int blackCount = 0;
-        int whiteCount = 0;
+        //int blackCount = 0;
+        //int whiteCount = 0;
 
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
@@ -165,5 +167,11 @@ public class OthelloGameService {
     }
     public char getCurrentPlayer() {
     	return this.currentPlayer;
+    }
+    public int getBlackCount() {
+    	return this.blackCount;
+    }
+    public int getWhiteCount() {
+    	return this.whiteCount;
     }
 }

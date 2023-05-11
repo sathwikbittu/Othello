@@ -1,0 +1,20 @@
+.game {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .game h3 {
+    margin-top: 0;
+  }
+  
+  .game ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .game li {
+    margin-bottom: 5px;
+  }
+  

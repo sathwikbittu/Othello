@@ -1,0 +1,12 @@
+<h2>List of Games</h2>
+
+<div *ngFor="let game of games">
+  <div class="game">
+    <h3>Game {{ game.id }}</h3>
+    <ul>
+      <li *ngFor="let move of game.moves">
+        {{ move.player }} moved to row {{ move.row }}, column {{ move.column }}
+      </li>
+    </ul>
+  </div>
+</div>

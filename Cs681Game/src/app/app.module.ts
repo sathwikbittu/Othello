@@ -14,6 +14,7 @@ import { WinnerComponent } from './winner/winner.component';
 import { RuleComponent } from './rule/rule.component';
 import { AboutComponent } from './about/about.component';
 import { HighScoresComponent } from './high-scores/high-scores.component';
+import { GameMovesComponent } from './game-moves/game-moves.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { HighScoresComponent } from './high-scores/high-scores.component';
     RuleComponent,
     AboutComponent,
     HighScoresComponent,
+    GameMovesComponent,
   ],
   imports: [
     BrowserModule,

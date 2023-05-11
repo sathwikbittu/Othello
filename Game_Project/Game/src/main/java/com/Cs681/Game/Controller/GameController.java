@@ -21,12 +21,16 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Cs681.Game.Model.GameMoves;
 import com.Cs681.Game.Model.HighScores;
+import com.Cs681.Game.Model.Move;
 import com.Cs681.Game.Model.Player;
 import com.Cs681.Game.Model.Room;
 import com.Cs681.Game.Model.User;
 import com.Cs681.Game.OthelloGame.OthelloGameService;
+import com.Cs681.Game.Repo.GameRepo;
 import com.Cs681.Game.Repo.HighScoresRepo;
+import com.Cs681.Game.Repo.MoveRepo;
 import com.Cs681.Game.Repo.PlayerRepository;
 import com.Cs681.Game.Repo.PlayerRepositoryJpaImpl;
 import com.Cs681.Game.Repo.RoomRepo;
@@ -63,6 +67,10 @@ public class GameController {
 	private RoomRepo roomRepo;
 	@Autowired
 	private HighScoresRepo highScoresRepo;
+	@Autowired
+	private MoveRepo moveRepo;
+	@Autowired
+	private GameRepo gameRepo;
 	
 	 private List<Player> players = new ArrayList<>();
 	    private OthelloGameService gameService = new OthelloGameService();
@@ -227,6 +235,10 @@ public class GameController {
     @SendTo("/topic/gameWinner")
 	public ResponseEntity<String> getWinner(@Payload String message) {
 		Long roomId =  (long) Integer.parseInt(message);
+		List<Move> moves = moveRepo.findByGameId(message);
+		GameMoves game = new GameMoves();
+		game.setMoves(moves);
+		gameRepo.save(game);
 //		System.out.println("roomId: "+roomId);
 //		Room room = roomRepo.getById(roomId);
 //		User blackUser = userRepo.findByUserName(room.getUserName()).get(0);
@@ -305,7 +317,23 @@ public class GameController {
         
         return ResponseEntity.ok(board);
     }
-  
+    
+    @PostMapping("/saveMove")
+    public ResponseEntity<String> saveMove(@RequestParam String gameId, @RequestBody Move move) {
+        // Call the moveService to save the move
+        move.setGameId(gameId);
+        Move savedMove = moveRepo.save(move);
+
+        // Return the saved move in the response body with a status code of 201 (Created)
+        return ResponseEntity.ok("MoveSaved");
+    }
+
+    @GetMapping("/getGames")
+    public List<GameMoves> getGame(){
+    	return gameRepo.findAll();
+    	
+    }
+    
 
     @PostMapping("/move")
     public ResponseEntity<String> makeMove(@RequestParam int row, @RequestParam int col) {
@@ -319,10 +347,12 @@ public class GameController {
         }
         moved = true;
         System.out.println("HERE AT MOVED");
+        
         othelloGame.switchPlayer();
         char[][] board = othelloGame.getBoard();
+        
         //server.getBroadcastOperations().sendEvent("boardUpdate", (Object[]) board);
-
+        
         return ResponseEntity.ok("Moved");
 
     }

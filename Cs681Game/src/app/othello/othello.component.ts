@@ -282,9 +282,16 @@ export class OthelloComponent implements OnInit {
           const move: Move = {
             row: row,
             column: col,
-            player: this.currentUser // Assuming you have a variable that holds the current player
+            player: this.currentUser,
+            // Assuming you have a variable that holds the current player
           };
           this.moves.push(move);
+          this.othelloService.saveMove(localStorage.getItem("roomId") || '{}', move)
+            .subscribe(async response =>{
+              if(response==="MoveSaved"){
+                console.log("SAVED THE MOVE");
+              }
+            })
           this.wrongMove = '';
           this.moved = true;
           await this.refreshBoard();

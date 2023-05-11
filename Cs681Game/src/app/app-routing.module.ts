@@ -7,7 +7,7 @@ import { AuthGuard } from './auth-gaurd.service';
 import { OthelloComponent } from './othello/othello.component';
 import { RuleComponent } from './rule/rule.component';
 import { AboutComponent } from './about/about.component';
-import { HighScores } from './HighScores';
+import { HighScores } from './highScores';
 import { HighScoresComponent } from './high-scores/high-scores.component';
 const routes: Routes = [
   {path:"",redirectTo:"login",pathMatch:"full"},

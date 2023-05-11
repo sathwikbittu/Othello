@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { Room } from './room';
-import { HighScores } from './HighScores';
+import { HighScores } from './highScores';
+import { Move } from './move';
+import { GameMoves } from './game-moves';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +62,7 @@ export class OthelloService {
   highScores(){
     return this.http.get<HighScores[]>("http://localhost:8080/highScores");
   }
+  
   // getBoardUpdates(): Observable<any> {
   //   return new Observable<any>(observer => {
   //     this.socket.on('boardUpdate', (board: any) => {
@@ -80,6 +83,10 @@ export class OthelloService {
     // this.recieveData();
     return this.http.post(`${this.baseUrl}/move?row=${row}&col=${col}`, null, { responseType: 'text' });
     //return this.socket.emit('make-move', { row, col });
+
+}
+saveMove(gameId: string, move: Move){
+  return this.http.post<string>(`${this.baseUrl}/saveMove?gameId=${gameId}`, move);
 
 }
 sendData(){
@@ -133,6 +140,7 @@ recieveData(): Observable<string[][]> {
   getPlayers(gameId: string) {
     return this.http.get<Player[]>(`${this.baseUrl}/players?gameId=${gameId}`);
   }
+  
   // connectSocket() {
   //   if (!this.socket.connected) {
   //     this.socket.connect();

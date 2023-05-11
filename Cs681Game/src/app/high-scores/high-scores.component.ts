@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OthelloService } from '../othello.service';
-import { HighScores } from '../HighScores';
+import { HighScores } from '../highScores';
 
 @Component({
   selector: 'app-high-scores',

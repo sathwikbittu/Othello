@@ -9,6 +9,7 @@ import { RuleComponent } from './rule/rule.component';
 import { AboutComponent } from './about/about.component';
 import { HighScores } from './highScores';
 import { HighScoresComponent } from './high-scores/high-scores.component';
+import { GameMovesComponent } from './game-moves/game-moves.component';
 const routes: Routes = [
   {path:"",redirectTo:"login",pathMatch:"full"},
   {path:"register",component:RegistrationComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path:"othello",component:OthelloComponent},
   { path: 'rules', component: RuleComponent },
   {path : 'about', component: AboutComponent},
-  {path: 'high-score', component: HighScoresComponent}
+  {path: 'high-score', component: HighScoresComponent},
+  {path: 'game-moves', component: GameMovesComponent}
 ];
 
 @NgModule({

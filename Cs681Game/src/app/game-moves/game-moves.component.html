@@ -4,9 +4,14 @@
   <div class="game">
     <h3>Game {{ game.id }}</h3>
     <ul>
-      <li *ngFor="let move of game.moves">
-        {{ move.player }} moved to row {{ move.row }}, column {{ move.column }}
-      </li>
+      <ng-container *ngIf="game.moves && game.moves.length > 0; else noMoves">
+        <li *ngFor="let move of game.moves">
+          {{ move.player }} moved to row {{ move.moveRow }}, column {{ move.moveColumn }}
+        </li>
+      </ng-container>
+      <ng-template #noMoves>
+        <li>No moves played.</li>
+      </ng-template>
     </ul>
   </div>
 </div>

@@ -14,7 +14,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -317,16 +316,14 @@ public class GameController {
         
         return ResponseEntity.ok(board);
     }
-    
-    @PostMapping("/saveMove")
+   
+   @PostMapping("/saveMove")
     public ResponseEntity<String> saveMove(@RequestParam String gameId, @RequestBody Move move) {
         // Call the moveService to save the move
-        move.setGameId(gameId);
-        Move savedMove = moveRepo.save(move);
-
-        // Return the saved move in the response body with a status code of 201 (Created)
-        return ResponseEntity.ok("MoveSaved");
-    }
+	   move.setGameId(gameId);
+	   Move savedMove = moveRepo.save(move);
+	   return ResponseEntity.ok("MoveSaved");
+   }
 
     @GetMapping("/getGames")
     public List<GameMoves> getGame(){

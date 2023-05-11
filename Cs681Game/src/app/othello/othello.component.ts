@@ -24,7 +24,7 @@ export class OthelloComponent implements OnInit {
   validMoves: number = 0;
   private ws: any;
   winner: string = '';
-  isFull : any;
+  isFull : boolean = true;
   currentUser = localStorage.getItem("userName") || '{}';
   player = localStorage.getItem(localStorage.getItem("userName")|| '{}');
   wrongUser: any;
@@ -111,69 +111,73 @@ export class OthelloComponent implements OnInit {
      let response = JSON.parse(message.body);
      _this.board = response.body.map((row: string) => Array.from(row));
      //_this.board = response.body;
-     
+     if(_this.winner!=''){
+      window.location.href="/home";
+
+     }
      console.log("Board:", _this.board);
+     if(_this.currentPlayer==_this.player){
+      _this.wrongUser='';
+     }
+     for(let i=0; i<_this.board.length; i++){
+      console.log("HERE in i");
+      for(let j=0; j<_this.board[i].length; j++){
+        console.log("Board in winner: "+_this.board[i][j]);
+        if(_this.board[i][j] == '' ){
+          console.log("[i][j]: "+[i][j])
+          _this.isFull = false;
+          break;
+        }
+      }
+      if(!_this.isFull){
+        break;
+      }
+    }
+
+   if(_this.isFull){
+     _this.ws.send("/game/winner", {}, localStorage.getItem("roomId"));
+     _this.ws.subscribe("/topic/gameWinner", function(message: any) {
+       console.log("WINNER:", message.body);
+       let response = JSON.parse(message.body);
+       console.log("winner:"+response.body);
+       _this.winner = response.body;
+     })
+
+       if(_this.winner=='black'){
+         alert("The winner is black")
+         localStorage.removeItem(localStorage.getItem("userName") || '{}');
+         window.location.href="/home";
+
+       }
+       if(_this.winner == 'white'){
+         alert("The winner is white")
+         localStorage.removeItem(localStorage.getItem("userName") || '{}');
+         window.location.href="/home";
+
+       }
+       if(_this.winner =='tie'){
+         alert("tie")
+         localStorage.removeItem(localStorage.getItem("userName") || '{}');
+         window.location.href="/home";
+
+
+       }
+      }
+   
+      console.log("BOARD LENGTH:"+_this.board.length);
      _this.ws.send("/game/currentPlayer", {}, data);
      _this.ws.subscribe("/topic/currentPlayer",  function(message: any) {
        let response = JSON.parse(message.body);
        _this.currentPlayer = response.body;
-       if(_this.currentPlayer==_this.player){
-        _this.wrongUser='';
-       }
-       for(let i=0; i<_this.board.length; i++){
-        console.log("HERE in i");
-        for(let j=0; j<_this.board[i].length; j++){
-          console.log("Board in winner: "+_this.board[i][j]);
-          if(_this.board[i][j] != 'W' || _this.board[i][j]!='B'){
-            _this.isFull = false;
-            break;
-          }
-        }
-        if(!_this.isFull){
-          break;
-        }
-      }
-
-     if(_this.isFull){
-       _this.ws.send("/game/winner", {}, localStorage.getItem("roomId"));
-       _this.ws.subscribe("/topic/gameWinner", function(message: any) {
-         console.log("WINNER:", message.body);
-         let response = JSON.parse(message.body);
-         console.log("winner:"+response.body);
-         _this.winner = response.body;
-       })
-
-         if(_this.winner=='black'){
-           //alert("The winner is black")
-           localStorage.removeItem(localStorage.getItem("userName") || '{}');
-           window.location.href="/home";
-
-         }
-         if(_this.winner == 'white'){
-           //alert("The winner is white")
-           localStorage.removeItem(localStorage.getItem("userName") || '{}');
-           window.location.href="/home";
-
-         }
-         if(_this.winner =='tie'){
-           //alert("tie")
-           localStorage.removeItem(localStorage.getItem("userName") || '{}');
-           window.location.href="/home";
-
-
-         }
-         
-       }
+       
+       
 
      
     })
-    resolve();
+  })
+  resolve();
 
-  }, function(error: any) {
-    console.error("Subscription error:", error);
-  });
-  console.log("BOARD LENGTH:"+_this.board.length);
-})
+  })
 
    
 
@@ -280,8 +284,8 @@ export class OthelloComponent implements OnInit {
       .subscribe(async response => {
         if (response === "Moved") {
           const move: Move = {
-            row: row,
-            column: col,
+            moveRow: row,
+            moveColumn: col,
             player: this.currentUser,
             // Assuming you have a variable that holds the current player
           };

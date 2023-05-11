@@ -17,7 +17,7 @@ export class GameMovesComponent implements OnInit {
   }
 
   getGames() {
-    this.http.get<GameMoves[]>('/getGames').subscribe(
+    this.http.get<GameMoves[]>('http://localhost:8080/getGames').subscribe(
       (games: GameMoves[]) => {
         // Handle the retrieved games here
         console.log(games);

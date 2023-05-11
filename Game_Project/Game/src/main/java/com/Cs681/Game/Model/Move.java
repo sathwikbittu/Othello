@@ -5,14 +5,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Table(name ="saveMoves")
 public class Move {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int row;
-    private int column;
+	private int moveRow;
+    private int moveColumn;
     private String player;
     private String gameId;
 	public Long getId() {
@@ -21,17 +31,17 @@ public class Move {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public int getRow() {
-		return row;
+	public int getMoveRow() {
+		return moveRow;
 	}
-	public void setRow(int row) {
-		this.row = row;
+	public void setMoveRow(int moveRow) {
+		this.moveRow = moveRow;
 	}
-	public int getColumn() {
-		return column;
+	public int getMoveColumn() {
+		return moveColumn;
 	}
-	public void setColumn(int column) {
-		this.column = column;
+	public void setMoveColumn(int moveColumn) {
+		this.moveColumn = moveColumn;
 	}
 	public String getPlayer() {
 		return player;
@@ -45,7 +55,7 @@ public class Move {
 	public void setGameId(String gameId) {
 		this.gameId = gameId;
 	}
-
+	
 	
 
 }

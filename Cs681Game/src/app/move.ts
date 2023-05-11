@@ -1,5 +1,5 @@
 export interface Move {
-    row: number;
-    column: number;
+    moveRow: number;
+    moveColumn: number;
     player: string;
   }

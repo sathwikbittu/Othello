@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.Cs681.Game.Model.Move;
-import com.Cs681.Game.Model.User;
 
 public interface MoveRepo  extends JpaRepository<Move, Long> {
 	List<Move> findByGameId(String gameId);

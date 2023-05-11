@@ -138,6 +138,9 @@ export class HomeComponent implements OnInit {
   }
   async joinRoom(room: Room) {
     const _this= this;
+    if(room.joinedPlayerName!=null){
+      this.roomOccupied =true;
+    }
     const socket = new WebSocket("ws://localhost:8080/othello");
     room.joinedPlayerName = this.currentUser;
     this.ws = Stomp.over(socket);

@@ -111,10 +111,6 @@ export class OthelloComponent implements OnInit {
      let response = JSON.parse(message.body);
      _this.board = response.body.map((row: string) => Array.from(row));
      //_this.board = response.body;
-     if(_this.winner!=''){
-      window.location.href="/home";
-
-     }
      console.log("Board:", _this.board);
      if(_this.currentPlayer==_this.player){
       _this.wrongUser='';
@@ -286,7 +282,7 @@ export class OthelloComponent implements OnInit {
           const move: Move = {
             moveRow: row,
             moveColumn: col,
-            player: this.currentUser,
+            player: localStorage.getItem("userName") || '{}'
             // Assuming you have a variable that holds the current player
           };
           this.moves.push(move);

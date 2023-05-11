@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,6 +76,10 @@ public class GameController {
 		return "hi";
 
 	}
+	@GetMapping("/getUserName")
+    public String getUserName(@RequestHeader("Authorization") String token) {
+        return jwtUtil.getUserName(token);
+    }
 	@PostMapping("/otpVerification")
 	public String otpVerification(@RequestBody User user) throws MessagingException {
 		String check = userCheck.checkUser(user);
@@ -86,6 +91,7 @@ public class GameController {
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 			return null;
 		}
 		}else {
@@ -93,19 +99,20 @@ public class GameController {
 		}
 	}
 	
+	
 	@PostMapping("/login")
 	public String login(@RequestBody User user) {
 		System.out.println("userName: "+user.getUserName());
 		boolean check = loginService.loginCheck(user.getUserName(), user.getUserPassword());
 		System.out.println("CHECK: "+check);
 		if(check==true) {
-			Player player = new Player();
-	        player.setName(user.getUserName());
-	        player.setReady(true);
+			//Player player = new Player();
+	        //player.setName(user.getUserName());
+	        //player.setReady(true);
 	        //gameId = UUID.randomUUID().toString();
-	        gameId = "test";
-	        System.out.println("GAMEID: "+gameId);
-	        playerRepo.save(player);
+	        //gameId = "test";
+	        //System.out.println("GAMEID: "+gameId);
+	        //playerRepo.save(player);
 			//players.add(new Player(user.getUserName()));
 	        String token = jwtUtil.generateToken(user.getUserName());
 	        System.out.println(token);

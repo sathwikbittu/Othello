@@ -18,6 +18,12 @@ export class UserRegistrationService {
   public login(user:any){
     return this.http.post("http://localhost:8080/login",user,{responseType:'text' as 'json'});
   }
+  public getUserName(token: string){
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const options = { headers: headers };
+
+  return this.http.get<string>("http://localhost:8080/getUserName", options);
+  }
 
 
 

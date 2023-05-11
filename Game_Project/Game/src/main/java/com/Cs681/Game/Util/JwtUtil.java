@@ -5,6 +5,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -24,5 +25,13 @@ public class JwtUtil {
 	                .compact();
 	        return jwtToken;
 }
+	    public String getUserName(String token) {
+	        Claims claims = Jwts.parser()
+	                .setSigningKey(SECRET_KEY)
+	                .parseClaimsJws(token)
+	                .getBody();
+
+	        return claims.getSubject();
+	    }
 }
 

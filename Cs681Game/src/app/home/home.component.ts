@@ -6,6 +6,8 @@ import { Player } from '../player';
 import { Stomp } from '@stomp/stompjs';
 import { Room } from '../room';
 import { Rooms } from '../rooms';
+import { AuthService } from '../auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +17,8 @@ import { Rooms } from '../rooms';
 export class HomeComponent implements OnInit {
   board: any;
   players: any[] = [];
-  currentUser = localStorage.getItem("userName") || '{}';
+  //currentUser = localStorage.getItem("userName") || '{}';
+  currentUser: any;
   isReady: boolean = false;
   gameId: any = '';
   otherPlayerReady: boolean = false;
@@ -31,15 +34,19 @@ export class HomeComponent implements OnInit {
 
   getRooms: Rooms[] = [];
   
-  constructor(private http: HttpClient, private router: Router, private othelloService: OthelloService,) { }
+  constructor(private http: HttpClient, private router: Router, private othelloService: OthelloService,private authService: AuthService,private cookieService: CookieService) { }
 
   home() {
     this.router.navigate(['/home']);
   }
 
   async ngOnInit() {
+    this.currentUser =  this.authService.getUserName(this.cookieService.get("token"));
     const socket = new WebSocket("ws://localhost:8080/othello");
-
+    console.log("TOKEN: "+localStorage.getItem("token"));
+    console.log("Current USer: "+this.currentUser);
+   // console.log(this.cookieService.get("userName"));
+    console.log()
     this.ws = Stomp.over(socket);
     const _this = this;
     this.ws.connect({}, async function(frame:any) {

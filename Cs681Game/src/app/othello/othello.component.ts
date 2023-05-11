@@ -4,6 +4,7 @@ import { data, error } from 'jquery';
 import { Observable } from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
+import { Move } from '../move';
 
 @Component({
   selector: 'app-othello',
@@ -29,6 +30,8 @@ export class OthelloComponent implements OnInit {
   wrongUser: any;
   moved: boolean = false;
   wrongMoveFadeOut: boolean = false;
+  moves: Move[] = [];
+
   constructor(private othelloService: OthelloService) { }
 
   ngOnInit() {
@@ -102,7 +105,7 @@ export class OthelloComponent implements OnInit {
     _this.ws.send("/game/kai", {}, data);
     new Promise<void>( resolve => {
     _this.ws.subscribe("/topic/board",  function(message: any) {
-
+     
 
       console.log("MESSAGE:", message.body);
      let response = JSON.parse(message.body);
@@ -114,6 +117,53 @@ export class OthelloComponent implements OnInit {
      _this.ws.subscribe("/topic/currentPlayer",  function(message: any) {
        let response = JSON.parse(message.body);
        _this.currentPlayer = response.body;
+       if(_this.currentPlayer==_this.player){
+        _this.wrongUser='';
+       }
+       for(let i=0; i<_this.board.length; i++){
+        console.log("HERE in i");
+        for(let j=0; j<_this.board[i].length; j++){
+          console.log("Board in winner: "+_this.board[i][j]);
+          if(_this.board[i][j] != 'W' || _this.board[i][j]!='B'){
+            _this.isFull = false;
+            break;
+          }
+        }
+        if(!_this.isFull){
+          break;
+        }
+      }
+
+     if(_this.isFull){
+       _this.ws.send("/game/winner", {}, localStorage.getItem("roomId"));
+       _this.ws.subscribe("/topic/gameWinner", function(message: any) {
+         console.log("WINNER:", message.body);
+         let response = JSON.parse(message.body);
+         console.log("winner:"+response.body);
+         _this.winner = response.body;
+       })
+
+         if(_this.winner=='black'){
+           //alert("The winner is black")
+           localStorage.removeItem(localStorage.getItem("userName") || '{}');
+           window.location.href="/home";
+
+         }
+         if(_this.winner == 'white'){
+           //alert("The winner is white")
+           localStorage.removeItem(localStorage.getItem("userName") || '{}');
+           window.location.href="/home";
+
+         }
+         if(_this.winner =='tie'){
+           //alert("tie")
+           localStorage.removeItem(localStorage.getItem("userName") || '{}');
+           window.location.href="/home";
+
+
+         }
+         
+       }
 
      
     })
@@ -127,50 +177,7 @@ export class OthelloComponent implements OnInit {
 
    
 
-          for(let i=0; i<_this.board.length; i++){
-               console.log("HERE in i");
-               for(let j=0; j<_this.board[i].length; j++){
-                 console.log("Board in winner: "+_this.board[i][j]);
-                 if(_this.board[i][j] != 'W' || _this.board[i][j]!='B'){
-                   _this.isFull = false;
-                   break;
-                 }
-               }
-               if(!_this.isFull){
-                 break;
-               }
-             }
-
-            if(_this.isFull){
-              _this.ws.send("/game/winner", {}, localStorage.getItem("roomId"));
-              _this.ws.subscribe("/topic/gameWinner", function(message: any) {
-                console.log("WINNER:", message.body);
-                let response = JSON.parse(message.body);
-                console.log("winner:"+response.body);
-                _this.winner = response.body;
-              })
-
-                if(_this.winner=='black'){
-                  //alert("The winner is black")
-                  localStorage.removeItem(localStorage.getItem("userName") || '{}');
-                  window.location.href="/home";
-
-                }
-                if(_this.winner = 'white'){
-                  //alert("The winner is white")
-                  localStorage.removeItem(localStorage.getItem("userName") || '{}');
-                  window.location.href="/home";
-
-                }
-                else{
-                  //alert("tie")
-                  localStorage.removeItem(localStorage.getItem("userName") || '{}');
-                  window.location.href="/home";
-
-
-                }
-                
-              }
+        
 
         
 
@@ -272,15 +279,20 @@ export class OthelloComponent implements OnInit {
     this.othelloService.makeMove(row, col)
       .subscribe(async response => {
         if (response === "Moved") {
+          const move: Move = {
+            row: row,
+            column: col,
+            player: this.currentUser // Assuming you have a variable that holds the current player
+          };
+          this.moves.push(move);
           this.wrongMove = '';
-          this.wrongUser = '';
           this.moved = true;
           await this.refreshBoard();
           this.moved = false;
         }
       },
         error=>{
-          this.wrongMove = 'WRONG MOVE';
+          this.wrongMove = 'WRONGMOVE';
       });
   }
   

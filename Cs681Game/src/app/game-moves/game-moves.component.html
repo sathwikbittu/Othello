@@ -6,7 +6,7 @@
     <ul>
       <ng-container *ngIf="game.moves && game.moves.length > 0; else noMoves">
         <li *ngFor="let move of game.moves">
-          {{ move.player }} moved to row {{ move.moveRow }}, column {{ move.moveColumn }}
+            {{ move.player === player ? 'You' : move.player }} moved to row {{ move.moveRow }}, column {{ move.moveColumn }}
         </li>
       </ng-container>
       <ng-template #noMoves>

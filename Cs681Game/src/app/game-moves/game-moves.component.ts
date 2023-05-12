@@ -9,10 +9,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GameMovesComponent implements OnInit {
   games: GameMoves[] = [];
+  player: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.player = localStorage.getItem("userName") || '{}';
     this.getGames();
   }
 

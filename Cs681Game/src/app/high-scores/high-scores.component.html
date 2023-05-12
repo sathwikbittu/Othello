@@ -1,19 +1,25 @@
-<table>
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Number of Matches</th>
-        <th>Number of Wins</th>
-        <th>Highest Score</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let score of highScores">
-        <td>{{ score.userName }}</td>
-        <td>{{ score.numberOfMatches }}</td>
-        <td>{{ score.numberOfWins }}</td>
-        <td>{{ score.highestScore }}</td>
-      </tr>
-    </tbody>
-  </table>
-  
+<link href="https://fonts.googleapis.com/css?family=Google+Sans&display=swap" rel="stylesheet">
+<div class="main-bg">
+  <div class="table-container">
+    <h1 style="text-align: center;">HIGH SCORES</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Number of Matches</th>
+          <th>Number of Wins</th>
+          <th>Highest Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let score of highScores">
+          <td>{{ score.userName }}</td>
+          <td>{{ score.numberOfMatches }}</td>
+          <td>{{ score.numberOfWins }}</td>
+          <td>{{ score.highestScore }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary btn-block login-btn" (click)="goHome()">Go Home</button>
+  </div>
+</div>

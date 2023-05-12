@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OthelloService } from '../othello.service';
 import { HighScores } from '../highScores';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-high-scores',
   templateUrl: './high-scores.component.html',
@@ -12,7 +12,7 @@ export class HighScoresComponent implements OnInit {
   highScores: HighScores[] = [];
   displayedColumns: string[] = ['userId', 'userName', 'numberOfMatches', 'numberOfWins', 'highestScore'];
 
-  constructor(private othelloService: OthelloService) { }
+  constructor(private othelloService: OthelloService,private router: Router) { }
 
   ngOnInit(): void {
     this.othelloService.highScores()
@@ -20,6 +20,8 @@ export class HighScoresComponent implements OnInit {
         this.highScores = data;
       });
   }
-  
+  goHome() {
+    this.router.navigate(['/home']);
+  }
 
 }

@@ -1,12 +1,27 @@
-body {
-  background-color: #bd9c56;
+.main-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('src/assets/images/Board.jpg');
+  background-size: cover;
+  z-index: -1;
+}
+
+.user-name {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: -30px;
+  text-align: center;
+  color: rgb(0, 0, 0);
 }
 
 .board-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 200vh;
 }
 
 .board {
@@ -14,32 +29,34 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 400px;
-  height: 400px;
-  background-color: #8BC34A;
-  border: 2px solid black;
+  width: 500px;
+  height: 500px;
+  background-color: #075912;
+  border: 4px solid black;
   box-shadow: 0 0 10px #888;
-  margin: 0 auto;
+  margin: 100px auto 0;
 }
 
 .player-symbol-1,
 .player-symbol-2 {
   position: absolute;
   top: 10px;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
 .player-symbol-1 {
-  left: 10px;
+  left: 80px;
+  top: 300px;
   background-image: url('/assets/images/blackPlayer.png');
 }
 
 .player-symbol-2 {
-  right: 10px;
+  right: 80px;
+  top: 300px;
   background-image: url('/assets/images/whitePlayer.png');
 }
 
@@ -54,34 +71,35 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
+
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin: 5px;
-  background-color: #09781a;
+  background-color: #449c26;
   box-shadow: 0 0 5px #555;
   cursor: pointer;
 }
 
 .cell.black {
-  background-color: #333;
+  background-color: rgb(56, 56, 56);
 }
 
 .cell.white {
-  background-color: #EEE;
+  background-color: rgb(255, 255, 255);
 }
 
 .piece {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: transparent;
   box-shadow: none;
 }
 
 .piece-inner {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: #000;
 }
@@ -95,7 +113,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f44336;
+  background-color: #ce3434;
   color: #fff;
   font-weight: bold;
   font-size: 16px;
@@ -116,8 +134,8 @@ body {
 
 .winner {
   position: absolute;
-  top: -100px;
-  left: 50%;
+  top: -200px;
+  left: 30%;
   transform: translateX(-50%);
   z-index: 1;
   font-size: 3em;
@@ -126,7 +144,7 @@ body {
   width: 80%;
   max-width: 500px;
   padding: 20px;
-  background-color: #F44336;
+  background-color: #0b2fce;
   color: white;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);

@@ -24,7 +24,6 @@ export class OthelloComponent implements OnInit {
   validMoves: number = 0;
   private ws: any;
   winner: string = '';
-  isFull : boolean = true;
   currentUser = localStorage.getItem("userName") || '{}';
   player = localStorage.getItem(localStorage.getItem("userName")|| '{}');
   wrongUser: any;
@@ -78,105 +77,64 @@ export class OthelloComponent implements OnInit {
     });
   }
 
-  async refreshBoard () {
-    // if(this.moved==true){
-    //   console.log("IN TRUE");
-    // await this.movedOrNot();
-    // }
-
+  async refreshBoard() {
     const _this = this;
-    //this.othelloService.sendData();
-    // this.othelloService.getBoard()
-    // .subscribe((board: string[][]) => {
-    //   this.board = board.map(row => Array.from(row));
-    //   this.validMoves = 0;
-    //   for (let i = 0; i < this.board.length; i++) {
-    //     for (let j = 0; j < this.board[i].length; j++) {
-    //       if (this.board[i][j] === null && this.isValidMove(i, j)) {
-    //         this.validMoves++;
-    //     }
-    //   }
-    // }
-    // });
     let data = JSON.stringify({
-      'name' : 'Nishith'
-    })
-   
-    _this.ws.send("/game/kai", {}, data);
-    new Promise<void>( resolve => {
-    _this.ws.subscribe("/topic/board",  function(message: any) {
-     
-
-      console.log("MESSAGE:", message.body);
-     let response = JSON.parse(message.body);
-     _this.board = response.body.map((row: string) => Array.from(row));
-     //_this.board = response.body;
-     console.log("Board:", _this.board);
-     if(_this.currentPlayer==_this.player){
-      _this.wrongUser='';
-     }
-     for(let i=0; i<_this.board.length; i++){
-      console.log("HERE in i");
-      for(let j=0; j<_this.board[i].length; j++){
-        console.log("Board in winner: "+_this.board[i][j]);
-        if(_this.board[i][j] == '' ){
-          console.log("[i][j]: "+[i][j])
-          _this.isFull = false;
-          break;
+      'name': 'Nishith'
+    });
+  
+    await new Promise<void>(resolve => {
+      _this.ws.send("/game/kai", {}, data);
+      _this.ws.subscribe("/topic/board", async function (message: any) {
+        console.log("MESSAGE:", message.body);
+        let response = JSON.parse(message.body);
+        _this.board = response.body.map((row: string) => Array.from(row));
+        console.log("Board:", _this.board);
+        
+  
+        console.log("BOARD LENGTH:" + _this.board.length);
+        _this.ws.send("/game/currentPlayer", {}, data);
+        _this.ws.subscribe("/topic/currentPlayer", function (message: any) {
+          let response = JSON.parse(message.body);
+          _this.currentPlayer = response.body;
+        });
+        if (_this.currentPlayer == _this.player) {
+          _this.wrongUser = '';
         }
-      }
-      if(!_this.isFull){
-        break;
-      }
-    }
-
-   if(_this.isFull){
-     _this.ws.send("/game/winner", {}, localStorage.getItem("roomId"));
-     _this.ws.subscribe("/topic/gameWinner", function(message: any) {
-       console.log("WINNER:", message.body);
-       let response = JSON.parse(message.body);
-       console.log("winner:"+response.body);
-       _this.winner = response.body;
-     })
-
-       if(_this.winner=='black'){
-         alert("The winner is black")
-         localStorage.removeItem(localStorage.getItem("userName") || '{}');
-         window.location.href="/home";
-
-       }
-       if(_this.winner == 'white'){
-         alert("The winner is white")
-         localStorage.removeItem(localStorage.getItem("userName") || '{}');
-         window.location.href="/home";
-
-       }
-       if(_this.winner =='tie'){
-         alert("tie")
-         localStorage.removeItem(localStorage.getItem("userName") || '{}');
-         window.location.href="/home";
-
-
-       }
-      }
-   
-      console.log("BOARD LENGTH:"+_this.board.length);
-     _this.ws.send("/game/currentPlayer", {}, data);
-     _this.ws.subscribe("/topic/currentPlayer",  function(message: any) {
-       let response = JSON.parse(message.body);
-       _this.currentPlayer = response.body;
-       
-       
-
-     
-    })
-  })
-  resolve();
-
-  })
-
-   
-
+        const flattenedBoard = _this.board.flat();
+        console.log("FALTEENNNNN:::: "+flattenedBoard);
+        const isFull = !flattenedBoard.includes(' ');
+        console.log("IS FUL:::::::: "+isFull);
+  
+        if (isFull) {
+          _this.ws.send("/game/winner", {}, localStorage.getItem("roomId"));
+          _this.ws.subscribe("/topic/gameWinner", function (message: any) {
+            console.log("WINNER:", message.body);
+            let response = JSON.parse(message.body);
+            console.log("winner:" + response.body);
+            _this.winner = response.body;
+  
+            if (_this.winner === 'black') {
+              alert("The winner is black");
+              localStorage.removeItem(localStorage.getItem("userName") || '{}');
+              window.location.href = "/home";
+            } else if (_this.winner === 'white') {
+              alert("The winner is white");
+              localStorage.removeItem(localStorage.getItem("userName") || '{}');
+              window.location.href = "/home";
+            } else if (_this.winner === 'tie') {
+              alert("tie");
+              localStorage.removeItem(localStorage.getItem("userName") || '{}');
+              window.location.href = "/home";
+            }
+          });
+        }
+  
+        resolve();
+      });
+    });
+  
+  
         
 
         

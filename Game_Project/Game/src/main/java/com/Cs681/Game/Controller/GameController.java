@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,6 +71,8 @@ public class GameController {
 	private MoveRepo moveRepo;
 	@Autowired
 	private GameRepo gameRepo;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	 private List<Player> players = new ArrayList<>();
 	    private OthelloGameService gameService = new OthelloGameService();
@@ -78,6 +81,7 @@ public class GameController {
 	@PostMapping("/registration")
 	public String userRegistration(@RequestBody User user) {
 		System.out.println("TESTING"+user.getFirstName());
+	    user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
 		userRepo.save(user);
 		String token = jwtUtil.generateToken(user.getUserName());
 		return "hi";

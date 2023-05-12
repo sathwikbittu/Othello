@@ -3,6 +3,7 @@ import { GameMoves } from '../game-moves';
 import { HttpClient } from '@angular/common/http';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Router } from '@angular/router';
 
 // Register fonts with pdfMake
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
@@ -18,7 +19,7 @@ export class GameMovesComponent implements OnInit {
   filteredGames: GameMoves[] = [];
   searchKeyword: string = '';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
 
   ngOnInit(): void {
     this.player = localStorage.getItem("userName") || '{}';
@@ -84,6 +85,9 @@ export class GameMovesComponent implements OnInit {
   
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
     pdfDocGenerator.download(`game_${game.id}_moves.pdf`);
+  }
+  goHome() {
+    this.router.navigate(['/home']);
   }
 
 }

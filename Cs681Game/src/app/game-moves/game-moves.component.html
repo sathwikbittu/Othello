@@ -1,40 +1,47 @@
-<h2>List of Games</h2>
-
-<div class="search-container">
-  <input type="text" [(ngModel)]="searchKeyword" (keyup.enter)="applyFilter()" placeholder="Search">
-  <button (click)="applyFilter()">Search</button>
-  <button (click)="clearFilter()">Clear</button>
-</div>
-
-<ngx-datatable
-  class="material"
-  [rows]="filteredGames"
-  [columnMode]="'force'"
-  [headerHeight]="50"
-  [footerHeight]="50"
-  [rowHeight]="'auto'"
->
-  <ngx-datatable-column name="Game ID">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      Game {{ row.id }}
-    </ng-template>
-  </ngx-datatable-column>
-
-  <ngx-datatable-column name="Moves">
-    <ng-template let-row="row" ngx-datatable-cell-template>
-      <div class="button-container">
-        <button (click)="downloadGameMovesAsPDF(row)">Download Moves as PDF</button>
+<div class="main-bg">
+    <div class="table-container">
+      <h1 style="text-align: center;">List of Games</h1>
+  
+      <div class="search-container">
+        <input type="text" [(ngModel)]="searchKeyword" (keyup.enter)="applyFilter()" placeholder="Search">
+        <button (click)="applyFilter()">Search</button>
+        <button (click)="clearFilter()">Clear</button>
       </div>
-      <ul>
-        <ng-container *ngIf="row.moves && row.moves.length > 0; else noMoves">
-          <li *ngFor="let move of row.moves">
-            {{ move.player === player ? 'You' : move.player }} moved to row {{ move.moveRow }}, column {{ move.moveColumn }}
-          </li>
-        </ng-container>
-        <ng-template #noMoves>
-          <li>No moves played.</li>
-        </ng-template>
-      </ul>
-    </ng-template>
-  </ngx-datatable-column>
-</ngx-datatable>
+
+      <ngx-datatable
+        class="material"
+        [rows]="filteredGames"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+      >
+        <ngx-datatable-column name="Game ID">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            Game {{ row.id }}
+          </ng-template>
+        </ngx-datatable-column>
+  
+        <ngx-datatable-column name="Moves">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div class="button-container">
+              <button (click)="downloadGameMovesAsPDF(row)">Download Moves as PDF</button>
+            </div>
+            <ul>
+              <ng-container *ngIf="row.moves && row.moves.length > 0; else noMoves">
+                <li *ngFor="let move of row.moves">
+                  {{ move.player === player ? 'You' : move.player }} moved to row {{ move.moveRow }}, column {{ move.moveColumn }}
+                </li>
+              </ng-container>
+              <ng-template #noMoves>
+                <li>No moves played.</li>
+              </ng-template>
+            </ul>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <button class="btn btn-primary btn-block login-btn" (click)="goHome()">Go Home</button>
+
+    </div>
+  </div>
+  

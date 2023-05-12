@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
           let room = new Room(row.roomId,row.userName, row.roomName, row.joinedPlayerName);
           if(room.joinedPlayerName!="" && _this.currentUser==room.userName){
             localStorage.setItem(room.userName,"B");
-            let num = _this.room.roomId;
+            let num = row.roomId;
             localStorage.setItem("roomId",num.toString());
             localStorage.setItem(room.joinedPlayerName,"W");
             window.location.href="/othello";

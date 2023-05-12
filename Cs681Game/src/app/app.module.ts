@@ -15,6 +15,7 @@ import { RuleComponent } from './rule/rule.component';
 import { AboutComponent } from './about/about.component';
 import { HighScoresComponent } from './high-scores/high-scores.component';
 import { GameMovesComponent } from './game-moves/game-moves.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { GameMovesComponent } from './game-moves/game-moves.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxDatatableModule
   ],
   providers: [UserRegistrationService],
   bootstrap: [AppComponent]

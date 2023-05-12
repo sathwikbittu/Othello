@@ -12,25 +12,19 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   styleUrls: ['./game-moves.component.css']
 })
 export class GameMovesComponent implements OnInit {
+
   games: GameMoves[] = [];
   player: any;
-  searchTerm: string = '';
   filteredGames: GameMoves[] = [];
-  
+  searchKeyword: string = '';
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.player = localStorage.getItem("userName") || '{}';
     this.getGames();
-    this.searchGames();
   }
   // Inside the component class
-
-
-  searchGames(): void {
-    this.filteredGames = this.games.filter(game => game.id.toString().includes(this.searchTerm));
-  }
 
 
   getGames() {
@@ -40,6 +34,8 @@ export class GameMovesComponent implements OnInit {
         console.log(games);
         // Assign the games to a component property if needed
         this.games = games;
+        this.filteredGames = games;
+
       },
       (error) => {
         // Handle error
@@ -47,6 +43,25 @@ export class GameMovesComponent implements OnInit {
       }
     );
   }
+
+  applyFilter(): void {
+    if (this.searchKeyword.trim() === '') {
+      this.filteredGames = this.games;
+    } else {
+      this.filteredGames = this.games.filter((game) => {
+        return game.moves.some((move) =>
+          move.player.toLowerCase().includes(this.searchKeyword.toLowerCase())
+        );
+      });
+    }
+  }
+
+  clearFilter(): void {
+    this.searchKeyword = '';
+    this.filteredGames = this.games;
+  }
+
+
   downloadGameMovesAsPDF(game: GameMoves): void {
     const docDefinition = {
       content: [

@@ -1,13 +1,17 @@
 
-<body>
+
 <!-- <img src="/assets/images/blackPlayer.png" alt="Player1">
 <img src="/assets/images/whitePlayer.png" alt="Player2"> -->
-
+<div class="main-bg">
 <div class="player-symbol-1" [class.active]="currentPlayer === 'B'"><div *ngIf="player=='B'">
-  {{currentUser}}
+  <div class="user-name">
+    {{currentUser}}
+  </div>
   </div></div>
 <div class="player-symbol-2" [class.active]="currentPlayer === 'W'"><div *ngIf="player=='W'">
-  {{currentUser}}
+  <div class="user-name">
+    {{currentUser}}
+  </div>
   </div></div>
 
 <!-- {{currentPlayer}} -->
@@ -40,5 +44,4 @@
     <span class="message-text">{{ winner }}</span>
   </div>
 </div>
-
-</body>
+</div>

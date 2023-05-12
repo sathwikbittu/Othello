@@ -1,20 +1,43 @@
 .game {
     border: 1px solid #ccc;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   
   .game h3 {
-    margin-top: 0;
+    font-size: 18px;
+    margin-bottom: 10px;
   }
   
   .game ul {
-    margin: 0;
-    padding: 0;
     list-style: none;
+    padding: 0;
   }
   
-  .game li {
+  .game ul li {
     margin-bottom: 5px;
   }
+  
+  .button-container {
+    text-align: right;
+    margin-top: 10px;
+  }
+  
+  .button-container button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+  
+  .button-container button:hover {
+    background-color: #45a049;
+  }
+  
   

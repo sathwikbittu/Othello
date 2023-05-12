@@ -1,17 +1,23 @@
 <h2>List of Games</h2>
 
-<div *ngFor="let game of games">
-  <div class="game">
-    <h3>Game {{ game.id }}</h3>
-    <ul>
-      <ng-container *ngIf="game.moves && game.moves.length > 0; else noMoves">
-        <li *ngFor="let move of game.moves">
+<div>
+
+  <div *ngFor="let game of games">
+    <div class="game">
+      <h3>Game {{ game.id }}</h3>
+      <div class="button-container">
+        <button (click)="downloadGameMovesAsPDF(game)">Download Moves as PDF</button>
+      </div>
+      <ul>
+        <ng-container *ngIf="game.moves && game.moves.length > 0; else noMoves">
+          <li *ngFor="let move of game.moves">
             {{ move.player === player ? 'You' : move.player }} moved to row {{ move.moveRow }}, column {{ move.moveColumn }}
-        </li>
-      </ng-container>
-      <ng-template #noMoves>
-        <li>No moves played.</li>
-      </ng-template>
-    </ul>
+          </li>
+        </ng-container>
+        <ng-template #noMoves>
+          <li>No moves played.</li>
+        </ng-template>
+      </ul>
+    </div>
   </div>
 </div>

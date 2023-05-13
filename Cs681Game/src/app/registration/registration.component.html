@@ -136,7 +136,10 @@
 
 
     
-<button type="submit" class="btn btn-primary"  *ngIf="showButton" (click)="generateOTP()" [disabled]="!userForm.valid" >Register</button>
+<button type="submit" class="btn btn-primary"  *ngIf="showButton" (click)="generateOTP()" [disabled]="!userForm.valid" >
+  <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
+  <span *ngIf="!isLoading">Register</span>
+</button>
 
    
     

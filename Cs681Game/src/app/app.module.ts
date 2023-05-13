@@ -16,6 +16,8 @@ import { AboutComponent } from './about/about.component';
 import { HighScoresComponent } from './high-scores/high-scores.component';
 import { GameMovesComponent } from './game-moves/game-moves.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+//import { NgxCaptchaModule } from 'ngx-captcha';
+//import { RECAPTCHA_SETTINGS, RecaptchaSettings } from 'ng-recaptcha';
 
 
 @NgModule({
@@ -37,7 +39,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
   ],
   providers: [UserRegistrationService],
   bootstrap: [AppComponent]

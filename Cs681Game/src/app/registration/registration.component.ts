@@ -28,6 +28,8 @@ export class RegistrationComponent implements OnInit {
   user: User = new User("","","","","","");
   message:any;
   value:any;
+  isLoading = false;
+
   constructor(private service: UserRegistrationService ,private authService: AuthService,private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
@@ -85,17 +87,29 @@ export class RegistrationComponent implements OnInit {
     }, 1000);
   }
   generateOTP() {
-    this.isBlurred = true;
-    this.displayOTPModal = true;
+   
+    this.isLoading = true;
     this.service.otpVerification(this.user)
-      .subscribe(data=>{
-        this.generatedOTP = data;
-        console.log("OTP: "+this.generatedOTP);
-        this.startTimer();
+      .subscribe(
+        (response: any) => {
+          console.log("response: "+response);
+          console.log("response: "+response.status);
+          // Handle successful response
+            this.isBlurred = true;
+            this.displayOTPModal = true;
+            this.generatedOTP = response;
+            console.log("OTP: " + this.generatedOTP);
+            this.startTimer();
 
-
-      })
-     
+        },
+        (errorResponse) => {
+          // Handle error response
+          console.log("Error: " + errorResponse.error);
+          alert(errorResponse.error);
+        }
+      );
+  
+  
     // Generate a random 6-digit OTP code
       //this.startTimer();
 

@@ -91,25 +91,27 @@ public class GameController {
     public String getUserName(@RequestHeader("Authorization") String token) {
         return jwtUtil.getUserName(token);
     }
+	
+	
+	
 	@PostMapping("/otpVerification")
-	public String otpVerification(@RequestBody User user) throws MessagingException {
+	public ResponseEntity<String> otpVerification(@RequestBody User user) throws MessagingException {
 		String check = userCheck.checkUser(user);
 		if(check==null) {
 		System.out.println("UserEmail: "+user.getEmailAddress());
 		try {
 			
-			return otpService.sendOTP(user.getEmailAddress());
+			return ResponseEntity.ok(otpService.sendOTP(user.getEmailAddress()));
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
-			return null;
+			return ResponseEntity.badRequest().body("Otp service not available");
 		}
 		}else {
-			return check;
+			return ResponseEntity.badRequest().body(check);
 		}
 	}
-	
 	
 	@PostMapping("/login")
 	public String login(@RequestBody User user) {

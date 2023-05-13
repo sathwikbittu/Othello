@@ -1,6 +1,7 @@
 <head>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans&display=swap" rel="stylesheet">
+  <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
 </head>
 <div class="login-container">
     <form (ngSubmit)="onLogin()" class="login-form" #loginForm="ngForm">
@@ -20,11 +21,20 @@
           <div style="font-size: 18px; text-align: center; padding: 10px; font-weight: bold;color: #ff0000;"*ngIf="password.errors?.['required']">Password is required.</div>
         </div>
       </div>
+    
+    
       <div style="text-align:center;">
       <button type="submit" class="btn btn-primary btn-block login-btn" [disabled]="!loginForm.form.valid || isLoading">
         <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status"></span>
         <span *ngIf="!isLoading">Login</span>
-      </button></div>
+      </button>
+      <div *ngIf="captchError" style="text-align: center; color: #ff0000; font-size: 18px; padding-top: 10px;">
+        Captcha not correct
+      </div>
+      </div>
+      <div *ngIf="loginError" style="text-align: center; color: #ff0000; font-size: 18px; padding-top: 10px;">
+        Username or password is incorrect.
+      </div>
       <div class="register-container">
         <span class="register-text">Don't have an account?</span>
         <button type="button" (click)="onRegister()" class="btn btn-outline-secondary register-btn">Register Now</button>

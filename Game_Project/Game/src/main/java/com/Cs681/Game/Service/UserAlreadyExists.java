@@ -16,11 +16,11 @@ public class UserAlreadyExists {
 			
 		}
 		
-		if(!userRepo.findByUserName(user.getEmailAddress()).isEmpty()) {
+		if(!userRepo.findByEmailAddress(user.getEmailAddress()).isEmpty()) {
 			return "EmailAddress is already registered";
 			
 		}
-		if(!userRepo.findByUserName(user.getPhoneNumber()).isEmpty()) {
+		if(!userRepo.findByPhoneNumber(user.getPhoneNumber()).isEmpty()) {
 			return "Phone number is already registered";
 			
 		}

@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
  
   
   async onLogin(){
-    if(this.captcha){
     const isLoggedIn =  await this.authService.loginAuth(this.user.userName, this.user.userPassword);
     this.isLoading = true;
     console.log("isloggedIn: "+isLoggedIn);
@@ -53,12 +52,8 @@ export class LoginComponent implements OnInit {
 
       this.loginError = true;
       
-     //window.location.href='/login';
+      //this.router.navigate(['/login'])
     }
-  }else{
-    this.captchError = true;
-
-  }
   }
     // let response = this.service.login(this.user);
     //   response.subscribe((data) => this.message = data);

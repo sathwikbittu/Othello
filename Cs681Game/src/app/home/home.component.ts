@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.currentUser =  this.authService.getUserName(this.cookieService.get("token"));
-    const socket = new WebSocket("ws://localhost:8080/othello");
+    const socket = new WebSocket("wss://localhost:8443/othello");
     console.log("TOKEN: "+localStorage.getItem("token"));
     console.log("Current USer: "+this.currentUser);
    // console.log(this.cookieService.get("userName"));
@@ -148,7 +148,7 @@ export class HomeComponent implements OnInit {
     if(room.joinedPlayerName!=null){
       this.roomOccupied =true;
     }
-    const socket = new WebSocket("ws://localhost:8080/othello");
+    const socket = new WebSocket("wss://localhost:8443/othello");
     room.joinedPlayerName = this.currentUser;
     this.ws = Stomp.over(socket);
     this.ws.connect({}, async function(frame:any) {

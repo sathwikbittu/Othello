@@ -37,7 +37,7 @@ export class OthelloComponent implements OnInit {
     this.moved = false;
     console.log("user: "+localStorage.getItem("userName") || '{}');
     console.log("player:"+localStorage.getItem(localStorage.getItem("userName") || '{}'))
-    const socket = new WebSocket("ws://localhost:8080/othello");
+    const socket = new WebSocket("wss://localhost:8443/othello");
 
     this.ws = Stomp.over(socket);
     const _this = this;

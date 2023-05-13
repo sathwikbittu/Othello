@@ -21,7 +21,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
         	.addEndpoint("/othello")
-        	.setAllowedOrigins("http://localhost:4200");
+        	.setAllowedOrigins("https://localhost:4200");
 
     }
 

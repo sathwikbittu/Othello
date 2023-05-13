@@ -9,6 +9,8 @@ import { Room } from './room';
 import { HighScores } from './highScores';
 import { Move } from './move';
 import { GameMoves } from './game-moves';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +18,12 @@ import { GameMoves } from './game-moves';
 export class OthelloService {
   private ws: any;
   board: string[][] = [];
-
+  
   //private socket: Socket;
   //private socket = new SockJS('/reversi');
   //stompClient = Stomp.over(this.socket);
   //private BASE_URL = 'http://localhost:4200';
-  private baseUrl = 'http://localhost:8080'; // Replace with your own API endpoint
+  private baseUrl = 'https://localhost:8443'; // Replace with your own API endpoint
   
   constructor(private http: HttpClient) {
     //this.socket = io(this.baseUrl);
@@ -33,7 +35,7 @@ export class OthelloService {
     return this.http.get<any>(`${this.baseUrl}/board`);
   }
   connect() {
-    const socket = new WebSocket("ws://localhost:8080/othello");
+    const socket = new WebSocket("wss://localhost:8443/othello");
 
     this.ws = Stomp.over(socket);
     const _this = this;
@@ -51,16 +53,16 @@ export class OthelloService {
     // });
   }
   roomCreate(room: any){
-    return this.http.post("http://localhost:8080/createRoom",room,{responseType:'text' as 'json'});
+    return this.http.post("https://localhost:8443/createRoom",room,{responseType:'text' as 'json'});
 
   }
   joinRoom(room: any){
-    return this.http.post<Room>("http://localhost:8080/joinRoom",room,{responseType:'text' as 'json'});
+    return this.http.post<Room>("https://localhost:8443/joinRoom",room,{responseType:'text' as 'json'});
 
   }
 
   highScores(){
-    return this.http.get<HighScores[]>("http://localhost:8080/highScores");
+    return this.http.get<HighScores[]>("https://localhost:8443/highScores");
   }
   
   // getBoardUpdates(): Observable<any> {
@@ -157,58 +159,3 @@ recieveData(): Observable<string[][]> {
 }
 
 
-
-
-
-
-// import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-// import { Player } from './player';
-// import { Observable } from 'rxjs';
-// import { io,Manager,Socket,SocketOptions } from 'socket.io-client';
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class OthelloService {
-//   private socket: Socket;
-//   private baseUrl = 'http://localhost:8080'; // Replace with your own API endpoint
-
-//   constructor(private http: HttpClient) {
-//     const baseUrl = 'http://localhost:8080'; // Replace with your own API endpoint
-//     const options = { transports: ['websocket'] } as Partial<SocketOptions>;
-//     this.socket = io(baseUrl, options);
-
-//   }
-//   getBoard() {
-//     return this.http.get<any>(`${this.baseUrl}/board`);
-//   }
-  
-//   makeMove(row: number, col: number) {
-//     return this.socket.emit('make-move', { row, col });
-//   }
-
-//   startGame(gameId: string) {
-//     return this.http.get(`${this.baseUrl}/start-game/${gameId}`);
-//   }
-
-//   joinGame(username: string) {
-//     this.socket.emit('join-game', { username });
-//   }
-
-//   setReady(username: string, isReady: boolean) {
-//     this.socket.emit('set-ready', { username, isReady });
-//   }
-
-//   getPlayers(gameId: string) {
-//     return this.http.get<Player[]>(`${this.baseUrl}/players/${gameId}`);
-//   }
-
-//   connectSocket() {
-//     this.socket.connect();
-//   }
-
-//   disconnectSocket() {
-//     this.socket.disconnect();
-//   }
-// }

@@ -9,20 +9,20 @@ export class UserRegistrationService {
   constructor(private http:HttpClient) { }
 
   public registration(user: any){
-    return this.http.post<string>("http://localhost:8080/registration",user,{responseType:'text' as 'json'});
+    return this.http.post<string>("https://localhost:8443/registration",user,{responseType:'text' as 'json'});
 
   }
   public otpVerification(user: any){
-    return this.http.post<string>("http://localhost:8080/otpVerification",user,{responseType:'text' as 'json'});
+    return this.http.post<string>("https://localhost:8443/otpVerification",user,{responseType:'text' as 'json'});
   }
   public login(user:any){
-    return this.http.post("http://localhost:8080/login",user,{responseType:'text' as 'json'});
+    return this.http.post("https://localhost:8443/login",user,{responseType:'text' as 'json'});
   }
   public getUserName(token: string){
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     const options = { headers: headers };
 
-  return this.http.get<string>("http://localhost:8080/getUserName", options);
+  return this.http.get<string>("https://localhost:8443/getUserName", options);
   }
 
 
@@ -30,7 +30,7 @@ export class UserRegistrationService {
   public welcome(token: any) {
     let tokenStr = 'Bearer ' + token;
     const headers = new HttpHeaders().set('Authorization', tokenStr);
-    return this.http.get<string>("http://localhost:8080/", {headers, responseType: 'text' as 'json' });
+    return this.http.get<string>("https://localhost:8443/", {headers, responseType: 'text' as 'json' });
   }
 
 }

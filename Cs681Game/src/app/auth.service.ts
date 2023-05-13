@@ -10,7 +10,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   user: User = new User("","","","","","");
   message: any;
-
+  //isLoggedIn = false;
   constructor(private loginService: UserRegistrationService, private cookieService: CookieService) { }
 
   isLoggedIn(){
